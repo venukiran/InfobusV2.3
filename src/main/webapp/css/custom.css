@@ -1,0 +1,124 @@
+/****custom ***************/
+body{
+	width: 100%;
+	height: 100%;
+	background: #000;
+	margin: 0px;
+	padding: 0px;
+}
+.videoplayer{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height:100%;
+	min-width: 100%; min-height: 100%;
+	z-index: 2;
+	background: #000;
+	padding-bottom:55px;
+}
+.figure-video-h{
+	    position: relative;
+		-webkit-margin-before: -4em;
+         -webkit-margin-after: -4em;
+          -webkit-margin-start: -14em; 
+          -webkit-margin-end: -14em;
+           padding-bottom: 58%;
+}
+.figure-video-v{
+	position:relative;
+	-webkit-margin-before: -2em;
+	            -webkit-margin-after: -4em;
+	            -webkit-margin-start: -14em; 
+	             -webkit-margin-end: -14em;
+	            padding-bottom: 60%;
+}
+.Lbandvideo{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height:100%;
+	min-width: 100%; 
+	min-height: 100%;
+	z-index: 0;
+	background: #000;
+	padding-bottom:55px;
+}
+
+.bus-data{
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	right: 0px;
+	float: right;
+	overflow: hidden;
+	background-color: transparent;
+}
+.addblock{
+	position: fixed;
+    width:100%;
+    height:100%;
+    float: right;
+    top: 0px;
+    right: 0px;
+    background: #000;
+    padding-bottom: 55px;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    border:0px;
+}
+.marquee{
+	font-size: 2.8em;
+	line-height: 61px;
+	width:92%;
+	padding-right:10px;
+}
+.time{
+	position: fixed;
+    width: 8%;
+    color: #fff;
+    text-align: center;
+    background-color: blue;
+    bottom: 0px;
+    right: 0px;
+    height: 61px;
+    font-size: 1.6em;
+    line-height: 60px;
+}
+embed:focus{
+	outline: none;
+}
+.navbar-color{
+	background-image: url('../images/REDSTRIP.png');
+	background-repeat: repeat;
+	color: #fff;
+    height: 61px !important;
+    position: fixed;
+    width: 100%;
+    color: #fff;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    z-index:1030; 
+    height: 61px;
+    line-height: 60px;
+}
+.infobus-logo{
+	width: 167px;
+    height: auto;
+    position: fixed;
+    top: 6%;
+    right: 8%;
+    z-index: 15;
+}
+.infobus-logo-v{
+	width: 167px;
+    height: auto;
+    position: fixed;
+    top: 6%;
+    right: 8%;
+    z-index: 15;
+}

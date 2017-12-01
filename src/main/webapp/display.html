@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>INFOBUS</title>
+    <!--Custom Css -->
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body onload="startTime();">
+    <div>    
+        <img src="images/INFOBUSHIGH.png" alt="infobuslogo" class="infobus-logo-v">
+        <figure class="figure-video-v">
+            <video class="videoplayer" id="videoplayer" controls="true">     
+                   Your browser does not support the video tag.
+            </video>
+            <video class="Lbandvideo" id="lbandplayer">     
+                   Your browser does not support the video tag.
+            </video>
+            </figure>
+            <div class="bus-data" id="busdata">
+                <iframe class="addblock" id="objecttag" src="http://piscreens.rtclivebus.com/#/ds-screen/1">
+                </iframe>
+            </div>
+    </div>
+    <nav class="navbar-color">
+        <marquee class="marquee"></marquee>
+        <div class="time" id="time"></div>
+    </nav>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.js"></script>
+    <script type="text/javascript">
+        function startTime() { 
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            var currenttime=h + ":" + m + ":" + s;
+            
+            document.getElementById('time').innerHTML =
+                h + ":" + m + ":" + s;
+            var t = setTimeout(startTime, 500);
+        }
+
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i
+            }; // add zero in front of numbers < 10
+            return i;
+        }
+    </script>
+ 
+ <script type="text/javascript">
+     $(document).ready(function(){
+          //ajax code for getting service data
+              $.getJSON( "json/videodetails.json" , function( result ){
+                    console.log(result);  
+   var video_list=[];
+   var Lbandlist=[];
+   var lband_list=result.videodata.Lbandvideos;
+   console.log("lband_list..........",lband_list);
+   var videolist=result.videodata.videos;
+     $.each(videolist,function(key,val){
+        $.each(val,function(key,val){
+          console.log("dfsdafsdf...",key,val);
+         // var index=val[key].value()
+       video_list.push(val);
+       });
+   });
+     $.each(lband_list,function(key,val){
+        $.each(val,function(key,val){
+          console.log("dfsdafsdf...",key,val);
+         // var index=val[key].value()
+       Lbandlist.push(val);
+       });
+   });
+
+   console.log("video_list",video_list,result.videodata.scrolltext);
+   $(".marquee").html(result.videodata.scrolltext);
+    var video_index = 0;
+    var video_player = null;
+    //when load page call for playing video
+    function onload() {
+          
+        console.log("body loaded");
+        console.log("Lbandlist..............",Lbandlist);
+        video_player = document.getElementById("videoplayer");
+        video_player.setAttribute("src", video_list[video_index]);
+        setTimeout(function(){video_player.play();},1000);  
+
+
+        $("#objecttag").attr('src','http://piscreens.rtclivebus.com/#/ds-screen/1');
+    }
+    //when video ended call function and repeat videos multiple times
+    document
+            .getElementById('videoplayer')
+            .addEventListener(
+                    'error',
+                    function(e) {
+                        switch (e.target.error.code) {
+                        case e.target.error.MEDIA_ERR_ABORTED:
+                            console.log('You aborted the video playback.');
+                            break;
+                        case e.target.error.MEDIA_ERR_NETWORK:
+                            console.log('A network error caused the video download to fail part-way.');
+                            break;
+                        case e.target.error.MEDIA_ERR_DECODE:
+                            console.log('The video playback was aborted due to a corruption problem or because the video used features your browser did not support.');
+                            break;
+                        case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                            console.log('The video could not be loaded, either because the server or network failed or because the format is not supported.');
+                            break;
+                        default:
+                            console.log('An unknown error occurred.');
+                            break;
+                        }
+                        playnext('error');
+                    }, false);
+    document.getElementById('videoplayer').addEventListener('ended',
+            function() {
+                playnext('success');
+            }, false);
+    //when start video call for bus data
+    document.getElementById('videoplayer').addEventListener(
+            'loadedmetadata',
+            function() {
+                $("#objecttag").attr('src',
+                        'http://piscreens.rtclivebus.com/#/ds-screen/1');
+            }, false);
+
+    function playnext(param) {
+        console.log("video ended");
+        if (video_index < video_list.length - 1) {
+            video_index++;
+            //lband length
+          /*  if(Lbandlist.length > 0){
+                var index=0;
+                //ToDo: index has to be calculated
+                $("#videoplayer").hide();
+                var lband=document.getElementById("lbandplayer");
+                $("#lbandplayer").css("z-index","1");
+                lband.setAttribute("src", "ads/Static.mp4"); 
+                lband.play();
+            }
+            */
+            $("#videoplayer").css("z-index", "1");
+            $("#busdata").css("z-index", "2");
+           /* $("#objecttag").css({"height":($(window).height()-5),"width":"100%"});
+                     $("#objecttag").animate({
+                          width:"75%",
+                          height:"70%"
+                       },2000);            
+            setTimeout(function() {
+                     $("#objecttag").animate({
+                          width:"100%",
+                          height:"100%"
+                       },2000);
+                }, 8000);
+*/
+            if (param == 'success') {
+                setTimeout(function() {
+                     $("#videoplayer").show();
+                    $("#busdata").css("z-index", "1");
+                    $("#videoplayer").css("z-index", "2");
+                    video_player.setAttribute("src", video_list[video_index]);                  
+                    video_player.play();
+                }, 10000);
+            } else {
+                setTimeout(function() {
+                    $("#busdata").css("z-index", "1");
+                    $("#videoplayer").css("z-index", "2");
+                    video_player.setAttribute("src", video_list[video_index]);
+                    video_player.play();
+                }, 10000);
+            }
+        } else {
+            video_index = 0;
+            onload();
+        }
+    }
+    onload();
+     })
+.error(function() { alert("error"); });
+     });
+ </script>
+</body>
+
+</html>

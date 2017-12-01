@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>INFOBUS</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/newtemplate.css">
+</head>
+<body>
+<div class="container-tv">
+<div class="col-left">
+<div class="strip"></div>
+</div>
+<div class="col-right">
+<div class="right-add-top">
+</div>
+<div class="right-add-bottom">
+</div>
+</div>
+<div class="bottom-add-left">
+</div>
+<div class="bottom-add-right">
+</div>
+<div class="footer-tv"></div>
+</div><!--container-tv-->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/lib/jquery.min.js"></script>
+    <script type="text/javascript">
+            $(window).on("load resize scroll",function(e){
+           var winheight=$(window).height();
+            $(".col-left,.col-right").css("height",(winheight-220));
+            var colright=$(".col-right").height();            
+            $(".right-add-top,.right-add-bottom").css("height",(colright/2));
+           });           
+           </script>
+
+</body>
+</html>
